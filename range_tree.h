@@ -15,11 +15,11 @@ public:
 
 private:
     struct Node {
-        int key_index;          // 关键点索引
+        int key_index;
         Node* left;
         Node* right;
-        Node* y_tree;           // y轴子树
-        bool is_leaf;           // 标记是否为叶子节点
+        Node* y_tree;   
+        bool is_leaf;     
     };
 
     Node* root;
@@ -37,5 +37,6 @@ private:
     void query_y_tree(Node* node, double y_low, double y_high);
     void delete_tree(Node* node);
 };
+
 
 #endif // RANGE_TREE_H
