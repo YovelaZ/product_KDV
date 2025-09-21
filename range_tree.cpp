@@ -10,7 +10,7 @@ RangeTree::RangeTree(statistics& stat_ref) : stat(stat_ref), root(nullptr) {
             return stat.featureVector[a][0] < stat.featureVector[b][0];
         if (stat.featureVector[a][1] != stat.featureVector[b][1])
             return stat.featureVector[a][1] < stat.featureVector[b][1];
-        return a < b; // 完全相同时，按原始索引排序
+        return a < b; 
     });
 
     root = build_x_tree(indices);
@@ -20,18 +20,14 @@ RangeTree::~RangeTree() {
     delete_tree(root);
 }
 void RangeTree::delete_tree(Node* node) {
-    if (!node) return; // 空节点直接返回
+    if (!node) return; 
 
-    // 递归删除左子树
     delete_tree(node->left);
 
-    // 递归删除右子树
     delete_tree(node->right);
 
-    // 递归删除Y子树（如果存在）
     delete_tree(node->y_tree);
 
-    // 释放当前节点内存
     delete node;
 }
 RangeTree::Node* RangeTree::build_x_tree(vector<int>& indices) {
@@ -53,7 +49,6 @@ RangeTree::Node* RangeTree::build_x_tree(vector<int>& indices) {
 
         node->y_tree = build_y_tree(y_indices);
 
-        // 叶子节点不需要y树，直接存储值
         return node;
     }
 
@@ -66,7 +61,6 @@ RangeTree::Node* RangeTree::build_x_tree(vector<int>& indices) {
     node->left = build_x_tree(left_indices);
     node->right = build_x_tree(right_indices);
 
-    // 非叶子节点构建y树
     vector<int> y_indices = indices;
     sort(y_indices.begin(), y_indices.end(), [&](int a, int b) {
         if (stat.featureVector[a][1] != stat.featureVector[b][1])
@@ -166,7 +160,6 @@ void RangeTree::query_tree(Node* node, double x_low, double x_high, double y_low
     double x = stat.featureVector[v_split->key_index][0];
 
     if (v_split->is_leaf) {
-        // 处理叶子节点
         double y = stat.featureVector[v_split->key_index][1];
         if (x >= x_low && x <= x_high && y >= y_low && y <= y_high) {
             stat.density += compute_density(stat.q[0], x, stat.k_type_x, stat.b_x) *
@@ -265,14 +258,14 @@ void RangeTree::query_tree(Node* node, double x_low, double x_high, double y_low
 
 }
 void RangeTree::traverse(Node* node) {
-    if (!node) return; // 终止条件
+    if (!node) return; 
     double x = stat.featureVector[node->key_index][0];
     double y = stat.featureVector[node->key_index][1];
     stat.density += compute_density(stat.q[0], x, stat.k_type_x, stat.b_x) *
                     compute_density(stat.q[1], y, stat.k_type_y, stat.b_y);
-    // 递归遍历左子树
+
     traverse(node->left);
-    // 递归遍历右子树
+
     traverse(node->right);
 }
 void RangeTree::query_y_tree(Node* node, double y_low, double y_high) {
@@ -280,7 +273,7 @@ void RangeTree::query_y_tree(Node* node, double y_low, double y_high) {
     Node* v_split = FINDSPLITNODE_Y(node,y_low,y_high);
     double y = stat.featureVector[v_split->key_index][1];
     if (v_split->is_leaf) {
-        // 处理叶子节点
+
         double x = stat.featureVector[v_split->key_index][0];
         if ( y >= y_low && y <= y_high) {
             stat.density += compute_density(stat.q[0], x, stat.k_type_x, stat.b_x) *
@@ -377,4 +370,5 @@ void RangeTree::query_y_tree(Node* node, double y_low, double y_high) {
 
     }
     return;
+
 }
