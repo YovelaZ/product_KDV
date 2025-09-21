@@ -15,12 +15,12 @@ std::unique_ptr<KDTree::KDNode> KDTree::buildTree(std::vector<int>& indices, int
     const int axis = depth % stat.dim;
     const size_t medianPos = indices.size() / 2;
 
-    // 改进的分割方法（允许重复值）
+
     splitByMedian(indices, axis, medianPos);
 
     auto node = std::make_unique<KDNode>(indices[medianPos], axis);
 
-    // 递归构建子树（包含可能相等的值）
+
     std::vector<int> leftIndices(indices.begin(), indices.begin() + medianPos);
     std::vector<int> rightIndices(indices.begin() + medianPos + 1, indices.end());
 
@@ -31,7 +31,7 @@ std::unique_ptr<KDTree::KDNode> KDTree::buildTree(std::vector<int>& indices, int
 }
 
 void KDTree::splitByMedian(std::vector<int>& indices, int axis, size_t k) {
-    // 使用nth_element确保左侧<=中位数，右侧>=中位数（允许重复）
+
     std::nth_element(indices.begin(), indices.begin() + k, indices.end(),
                      [this, axis](int a, int b) {
                          return stat.featureVector[a][axis] < stat.featureVector[b][axis];
@@ -54,17 +54,17 @@ void KDTree::rangeSearch(const KDNode* node,
     const double x = stat.featureVector[node->pointIdx][0];
     const double y = stat.featureVector[node->pointIdx][1];
 
-    // 检查当前点是否在范围内
+
     if (x >= qx_LB && x <= qx_UB && y >= qy_LB && y <= qy_UB) {
 //        result.push_back(node->pointIdx);
         stat.density = stat.density + compute_density(stat.q[0],stat.featureVector[node->pointIdx][0],stat.k_type_x,stat.b_x)*compute_density(stat.q[1],stat.featureVector[node->pointIdx][1],stat.k_type_y,stat.b_y);
     }
 
-    // 改进的搜索逻辑（处理重复值）
-    if (node->axis == 0) { // x轴分割
+
+    if (node->axis == 0) { 
         if (qx_LB <= x) rangeSearch(node->left.get(), qx_LB, qx_UB, qy_LB, qy_UB, result);
         if (qx_UB >= x) rangeSearch(node->right.get(), qx_LB, qx_UB, qy_LB, qy_UB, result);
-    } else { // y轴分割
+    } else { 
         if (qy_LB <= y) rangeSearch(node->left.get(), qx_LB, qx_UB, qy_LB, qy_UB, result);
         if (qy_UB >= y) rangeSearch(node->right.get(), qx_LB, qx_UB, qy_LB, qy_UB, result);
     }
@@ -94,14 +94,15 @@ void KDTree::nearestSearch(const KDNode* node, const double* query,
     const double nodeValue = stat.featureVector[node->pointIdx][axis];
     const double queryValue = query[axis];
 
-    // 优先搜索更近的分支
+
     KDNode* first = (queryValue < nodeValue) ? node->left.get() : node->right.get();
     KDNode* second = (queryValue < nodeValue) ? node->right.get() : node->left.get();
 
     if (first) nearestSearch(first, query, bestIdx, minDistSq);
 
-    // 检查另一分支是否需要搜索（考虑重复值情况）
+
     if (second && std::pow(queryValue - nodeValue, 2) < minDistSq) {
         nearestSearch(second, query, bestIdx, minDistSq);
     }
+
 }
