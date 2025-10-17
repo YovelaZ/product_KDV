@@ -15,11 +15,11 @@ g++ -c SCAN.cpp -o SCAN.o
 g++ -c kd_tree.cpp -o kd_tree.o
 g++ -c range_tree.cpp -o range_tree.o
 g++ -c alg_visual.cpp -o alg_visual.o
-g++ -c SLW.cpp -o SLW.o
-g++ -c PREFIX.cpp -o PREFIX.o
-g++ -c PREFIX_nosort.cpp -o PREFIX_nosort.o
-g++ main.cpp -O3 -o main init_visual.o SCAN.o alg_visual.o SLW.o PREFIX.o PREFIX_nosort.o kd_tree.o range_tree.o
-# exit #Remove this "exit" if you would like to run our code.
+g++ -c SLAM.cpp -o SLAM.o
+g++ -c MASS_CR.cpp -o MASS_CR.o
+g++ -c MASS_OPT.cpp -o MASS_OPT.o
+g++ main.cpp -O3 -o main init_visual.o SCAN.o alg_visual.o SLAM.o MASS_CR.o MASS_OPT.o kd_tree.o range_tree.o
+exit #Remove this "exit" if you would like to run our code.
 
 ###Input parameters to our C++ implementation###
 # stat.dataFileName = argv[1];
