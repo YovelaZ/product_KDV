@@ -1,5 +1,5 @@
 # Code Descriptions
-This code is the implementation of our paper "MASS: A Complexity-Optimal Solution for Product Kernel Density Visualization", which is submitted to SIGMOD 2026. Due to space limitations of the Github repository, we do not upload the datasets into this link. However, all datasets are the open data, which can be downloaded from the references in Table 3(see the column "Ref."). We have also attached ["example_data"](data/example_data) to show the format of the input data file. The data is stored in the following format: 
+This code is the implementation of our paper "MASS: A Complexity-Optimal Solution for Product Kernel Density Visualization", which is submitted to SIGMOD 2026. Due to space limitations of the Github repository, we do not upload the datasets into this link. However, all datasets are the open data, which can be downloaded from the references in Table 3 (see the column "Ref."). We have also attached ["example_data"](data/example_data) to show the format of the input data file. The data is stored in the following format: 
 The first row, the data size (n). 
 Starting from the second row, each sample is recorded with columns for the x-coordinate (in meters), y-coordinate (in meters).
 
@@ -32,7 +32,7 @@ After you have successfully compiled our C++ code, you can run our C++ code by i
 ```
 
 ## Example: Product KDV with Default Settings
-Here, we demonstrate how to use MASS_OPT to generate the product KDV for the San Francisco 311 calls dataset (input file: San_Francisco_311_calls). In this example, the Epanechnikov kernel is adopted for both the x- and y-directions, with the resolution set to 1280×960 and the bandwidth determined by Scott’s rule. The shell script is shown below.
+Here, we demonstrate how to use MASS_{OPT} to generate the product KDV for the San Francisco 311 calls dataset (input file: San_Francisco_311_calls). In this example, the Epanechnikov kernel is adopted for both the x- and y-directions, with the resolution set to 1280×960 and the bandwidth determined by Scott’s rule. The shell script is shown below.
 ```
 dir="./"
 dataset="San_Francisco_311_calls" 
