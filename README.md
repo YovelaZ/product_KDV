@@ -1,5 +1,5 @@
 # Code Descriptions
-This code is the implementation of our paper "MASS: A Complexity-Optimal Solution for Product Kernel Density Visualization", which is submitted to SIGKDD 2026. Due to space limitations of the Github repository, we do not upload the datasets into this link. However, all datasets are the open data, which can be downloaded from the references in Table 3 (see the column "Ref."). We have also attached ["example_data"](data/example_data) to show the format of the input data file. The data is stored in the following format: 
+This code is the implementation of our paper "MASS: A Complexity-Optimal Solution for Product Kernel Density Visualization", which is accepted to SIGKDD 2026. Due to space limitations of the Github repository, we do not upload the datasets into this link. However, all datasets are the open data, which can be downloaded from the references in Table 3 (see the column "Ref."). We have also attached ["example_data"](data/example_data) to show the format of the input data file. The data is stored in the following format: 
 The first row, the data size (n). 
 Starting from the second row, each sample is recorded with columns for the x-coordinate (in meters), y-coordinate (in meters).
 
